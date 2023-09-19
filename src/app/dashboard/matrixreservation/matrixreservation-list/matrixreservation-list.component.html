@@ -1,0 +1,39 @@
+<div class="carded">
+    <div class="top-bg accent"></div>
+
+    <div class="center">
+        <div class="header accent">
+            <h2>نمایش وضعیت رزرو اتاق ها</h2>
+
+            <div>
+                <button type="button" mat-raised-button class="u-margin-l-8">
+                    <mat-icon>search</mat-icon>دریافت اطلاعات رزرو
+                </button>                
+      
+            </div>
+        </div>
+
+        <div class="content-card">
+            <perfect-scrollbar>
+			<mat-table #table [dataSource]="dataSource">
+
+				<ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
+				  <mat-header-cell *matHeaderCellDef>{{ column.header }}</mat-header-cell>
+				  <mat-cell *matCellDef="let row">{{ column.cell(row) }}</mat-cell>
+				</ng-container>
+				<mat-header-row *matHeaderRowDef="displayedColumn"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumn;"></mat-row>
+			  </mat-table>
+            
+			</perfect-scrollbar>
+            
+            <mat-paginator #paginator
+                           showFirstLastButtons
+                           [length]=0
+                           [pageIndex]=0
+                           [pageSize]=0
+                           (page)="loadMatrixreservations($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</div>
