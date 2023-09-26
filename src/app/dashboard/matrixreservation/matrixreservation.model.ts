@@ -1,30 +1,6 @@
 export interface Matrixreservation {
-    adult: boolean;
-    backdrop_path: string;
-    belongs_to_collection?: BelongsToCollection;
-    budget?: number;
-    genre_ids?: number[];
-    genres?: Genres[];
-    homepage?: string;
-    id: number;
-    imdb_id?: string; // minlength: 9; maxlength: 9; pattern: ^tt[0-9]{7}
-    original_language: string;
-    original_title: string;
-    overview: string;
-    popularity: number;
-    poster_path: string;
-    production_companies?: ProductionCompanies;
-    production_countries?: ProductionCountries;
-    release_date: string;
-    revenue?: number;
-    runtime?: number;
-    spoken_languages?: SpokenLanguages;
-    status?: string;
-    tagline?: string;
-    title: string;
-    video: boolean;
-    vote_average: number;
-    vote_count: number;
+    id:number;
+	test:number
 }
 
 interface BelongsToCollection {

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-admin": {
+    "reservasion": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ngx-admin",
+            "outputPath": "dist/reservasion",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -27,10 +27,15 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
-            "scripts": []
+           "styles": [
+				  "node_modules/bootstrap/scss/bootstrap.scss",
+				  "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+				  "src/styles.scss"
+				],
+				"scripts": [
+				  "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+				]
+
           },
           "configurations": {
             "production": {
@@ -69,10 +74,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ngx-admin:build:production"
+              "browserTarget": "reservasion:build:production"
             },
             "development": {
-              "browserTarget": "ngx-admin:build:development"
+              "browserTarget": "reservasion:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -80,7 +85,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngx-admin:build"
+            "browserTarget": "reservasion:build"
           }
         },
         "test": {
@@ -96,9 +101,15 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
-            ],
-            "scripts": []
+				  "node_modules/bootstrap/scss/bootstrap.scss",
+				  "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+				  "node_modules/ngx-toastr/toastr.css",				  
+				  "src/styles.scss"
+				],
+				"scripts": [
+				  "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+				]
+
           }
         }
       }

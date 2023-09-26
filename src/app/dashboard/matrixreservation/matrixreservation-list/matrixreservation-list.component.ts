@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild ,ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -7,7 +7,10 @@ import { finalize } from 'rxjs/operators';
 import { LoadingBackdropService } from '../../../core/services/loading-backdrop.service';
 import { Matrixreservation } from '../../matrixreservation/matrixreservation.model';
 import { MatrixreservationService } from '../../matrixreservation/matrixreservation.service';
-
+import { NgPersianDatepickerModule } from 'ng-persian-datepicker';
+import { FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { EMPTY_FIELD } from '../matrixreservation.constants';
 
 @Component({
   selector: 'app-matrixreservation-list',
@@ -15,64 +18,48 @@ import { MatrixreservationService } from '../../matrixreservation/matrixreservat
   styleUrls: ['./matrixreservation-list.component.scss']
 })
 export class MatrixreservationListComponent implements OnInit {
+  IdKindStay=0;
+  countDay=0;
+  FromDate="";
+  txt="";
+  displayedColumn: string[]= [];  
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
-  @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
+  //@ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
   dataSource = new MatTableDataSource<Matrixreservation>();
-  displayedColumns: string[] = [
-    'title',
-    'overview',
-    'popularity',
-    'vote_average',
-    'release_date',
-  ];
-    columns = [
-    { columnDef: 'shomareotagh', header: 'شماره اتاق',    cell: (element: any) => `${element.shomareotagh}` },
-    { columnDef: 'day1',     header: '1402/06/27',   cell: (element: any) => `${element.day1}`     },
-    { columnDef: 'day2',   header: '1402/06/08', cell: (element: any) => `${element.day2}`   },
-    { columnDef: 'day3',   header: '1402/06/09', cell: (element: any) => `${element.day3}`   },
-    { columnDef: 'day4',   header: '1402/06/10', cell: (element: any) => `${element.day4}`   },
-    { columnDef: 'day5',   header: '1402/06/11', cell: (element: any) => `${element.day5}`   },
-    { columnDef: 'day6',   header: '1402/06/12', cell: (element: any) => `${element.day6}`   },
-    { columnDef: 'day7',   header: '1402/06/13', cell: (element: any) => `${element.day7}`   },
-    { columnDef: 'day8',   header: '1402/06/14', cell: (element: any) => `${element.day8}`   },
-    { columnDef: 'day9',   header: '1402/06/15', cell: (element: any) => `${element.day9}`   },
-    { columnDef: 'day10',   header: '1402/06/16', cell: (element: any) => `${element.day10}`   },
-	
-  ];
-    displayedColumn = this.columns.map(c => c.columnDef);
+  dateValue = new FormControl();
 
   constructor(
     private loadingBackdropService: LoadingBackdropService,
     private matrixreservationService: MatrixreservationService,
     private route: ActivatedRoute,
     private router: Router,
+	private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    //this.dataSource.paginator = this.paginator;
     this.loadMatrixreservations();
 
+
   }
-  
+    ngOnDestroy() {
+    this.snackBar.dismiss();
+  }
 
   loadMatrixreservations(pageEvent?: PageEvent) {
     const pageIndex = pageEvent ? pageEvent.pageIndex : 0;
     this.loadingBackdropService.show();
 
     this.matrixreservationService
-      .list(pageIndex)
+      .list(pageIndex,this.IdKindStay,this.countDay,this.FromDate )
       .pipe(finalize(() => this.loadingBackdropService.hide()))
       .subscribe((data) => {
-        this.dataSource.data = data.results;
+	  //this.columns=data.header;
+	  //this.displayedColumn = this.columns.map(c => c.columnDef);
+	  this.displayedColumn = Object.keys(data.results[0]).map(k => k)
+      this.dataSource.data = data.results;
 
-        setTimeout(() => {
-          if (this.dataSource.paginator) {
-            this.dataSource.paginator.length = data.total_results;
-            this.dataSource.paginator.pageIndex = data.page;
-            this.dataSource.paginator.pageSize = 20;
-          }
-        });
       });
   }
 
@@ -80,8 +67,38 @@ export class MatrixreservationListComponent implements OnInit {
     this.router.navigate(['new'], { relativeTo: this.route });
   }
 
-  onMatrixreservationDetailNavigate(customer: Matrixreservation) {
-    this.router.navigate([customer.id], { relativeTo: this.route });
+  onMatrixreservationDetailNavigate(rowmatrix: Matrixreservation) {
+    this.router.navigate([rowmatrix.id], { relativeTo: this.route });
   }
+  getDataTable(){
+this.txt="";
+  if(this.IdKindStay==0){
+	  this.txt +="فیلد مکان اقامتی را پر کنید -";
+	  }
+  if(this.countDay==0){
+	  this.txt +="فیلد  تعداد روز را پر کنید  -";
+	  }
+	   if(this.FromDate==""){
+	  this.txt +="فیلد  تاریخ شروع را  پر کنید  -";
+	  }
+  if(this.txt!=""){
+    this.showWarning(this.txt); 
+	}
+	else{
+    this.loadMatrixreservations();
+	}
+  }
+    private showWarning(txt:string) {
+    this.snackBar.open(txt, 'باشه', 
+					{ duration: 5000, panelClass: ['red-snackbar'],},
+					
+					);
+  }
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
+
 
 }

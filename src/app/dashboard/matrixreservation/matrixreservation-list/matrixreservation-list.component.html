@@ -2,38 +2,55 @@
     <div class="top-bg accent"></div>
 
     <div class="center">
-        <div class="header accent">
-            <h2>نمایش وضعیت رزرو اتاق ها</h2>
 
-            <div>
-                <button type="button" mat-raised-button class="u-margin-l-8">
-                    <mat-icon>search</mat-icon>دریافت اطلاعات رزرو
-                </button>                
-      
-            </div>
-        </div>
+		<h2 class="margin-l-8" style="padding-top:5px"> وضعیت رزرو  </h2>
+         <div class="container-fluid">      
+	     <div class="row row-centered pos">		 
+                <div class="col-lg-2 col-xs-2 col-centered">
+					<mat-select  [(ngModel)]="IdKindStay" style="font-family:WYekan" placeholder="محل اقامت را مشخص کنید" class="mat-raised-button u-margin-l-8" >
+						<mat-option style="font-family:WYekan" value="4">سوئیت اقامتی</mat-option>
+						<mat-option style="font-family:WYekan" value="12">کاروانسرا</mat-option>
+						<mat-option style="font-family:WYekan" value="1025">ساکنین دهکده</mat-option>
+					</mat-select >
+                </div>
+               
+                <div class="col-lg-2 col-xs-2 col-centered">
+                    <mat-select [(ngModel)]="countDay" style="font-family:WYekan" placeholder="تعداد روز را مشخص کنید" class="mat-raised-button u-margin-l-8" >
+					<mat-option style="font-family:WYekan" value="7"> 7روز </mat-option>
+					<mat-option style="font-family:WYekan" value="14">14روز </mat-option>
+					<mat-option style="font-family:WYekan" value="28">28روز</mat-option>
+				</mat-select >
+                </div>
+				 <div class="col-lg-2 col-xs-2 col-centered">
+                   <ng-persian-datepicker class="datepicker-wrapper">
+				  <input type="text"  [(ngModel)]="FromDate" placeholder="از تاریخ:" [formControl]="dateValue" />
+				</ng-persian-datepicker>
+                </div>
+				
+				  <div class="col-lg-2 col-xs-2 col-centered">
+                   <button type="button" (click)="getDataTable()" mat-raised-button >
+					<mat-icon>search</mat-icon>جستوجو  
+				</button> 
+                </div>
+				  <div style="line-height:36px" class="col-lg-1 col-xs-1 col-centered">
+				    <mat-form-field>
+					<input matInput class="mat-raised-input" (keyup)="applyFilter($any($event).target.value)" placeholder="فیلتر">
+				  </mat-form-field>
+				  </div>
+            </div>		
+        </div>	
 
-        <div class="content-card">
-            <perfect-scrollbar>
-			<mat-table #table [dataSource]="dataSource">
+        <div class="container-fluid divtable" style="padding:0px">
+        
+			<mat-table style="overflow:auto;dir:rtl" #table [dataSource]="dataSource" class="table table-responsive">
 
-				<ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
-				  <mat-header-cell *matHeaderCellDef>{{ column.header }}</mat-header-cell>
-				  <mat-cell *matCellDef="let row">{{ column.cell(row) }}</mat-cell>
+				<ng-container *ngFor="let k of displayedColumn" [matColumnDef]="k">
+				  <mat-header-cell *matHeaderCellDef  >{{k}}</mat-header-cell>
+				  <mat-cell *matCellDef="let element"  [ngStyle]="{'background': element[k]}" [attr.data-label]="k"></mat-cell>
 				</ng-container>
 				<mat-header-row *matHeaderRowDef="displayedColumn"></mat-header-row>
-				<mat-row *matRowDef="let row; columns: displayedColumn;"></mat-row>
-			  </mat-table>
-            
-			</perfect-scrollbar>
-            
-            <mat-paginator #paginator
-                           showFirstLastButtons
-                           [length]=0
-                           [pageIndex]=0
-                           [pageSize]=0
-                           (page)="loadMatrixreservations($event)">
-            </mat-paginator>
+				<mat-row *matRowDef="let row; columns: displayedColumn;" (click)="onMatrixreservationDetailNavigate(row)"></mat-row>
+			  </mat-table>	
         </div>
-    </div>
+</div>
 </div>

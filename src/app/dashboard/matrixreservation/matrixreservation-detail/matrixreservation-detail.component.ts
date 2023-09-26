@@ -10,7 +10,7 @@ import { Matrixreservation } from '../matrixreservation.model';
 import { MatrixreservationService } from '../matrixreservation.service';
 import { LoadingBackdropService } from '../../../core/services/loading-backdrop.service';
 import { ConfirmDialogComponent } from '../../../shared/utils/dialogs/confirm-dialog/confirm-dialog.component';
-import { MOCKED_FEATURES_WARNING_MESSAGE } from '../matrixreservation.constants';
+import { EMPTY_FIELD  } from '../matrixreservation.constants';
 
 @Component({
   selector: 'app-matrixreservation-detail',
@@ -53,7 +53,7 @@ export class MatrixreservationDetailComponent implements OnInit, OnDestroy {
       this.pageType = 'new';
     }
 
-    this.showMockedFeaturesWarning();
+   // this.showMockedFeaturesWarning();
   }
 
   ngOnDestroy() {
@@ -89,46 +89,19 @@ export class MatrixreservationDetailComponent implements OnInit, OnDestroy {
 
   private initFormBuilder() {
     this.matrixreservationForm = new FormGroup({
-      adult: new FormControl({ value: null, disabled: false }),
-      backdrop_path: new FormControl({ value: null, disabled: false }),
-      budget: new FormControl({ value: null, disabled: false }),
-      homepage: new FormControl({ value: null, disabled: false }),
-      // genre_ids: new FormControl({ value: null, disabled: false }),
-      // id: new FormControl({ value: null, disabled: false }),
-      original_language: new FormControl({ value: null, disabled: false }),
-      original_title: new FormControl({ value: null, disabled: false }),
-      overview: new FormControl({ value: null, disabled: false }),
-      popularity: new FormControl({ value: null, disabled: false }),
-      poster_path: new FormControl({ value: null, disabled: false }),
-      release_date: new FormControl({ value: null, disabled: false }),
-      title: new FormControl({ value: null, disabled: false }, Validators.required),
-      video: new FormControl({ value: null, disabled: false }),
-      vote_average: new FormControl({ value: null, disabled: false }),
-      vote_count: new FormControl({ value: null, disabled: false }),
+      id: new FormControl({ value: null, disabled: false }),
+      test: new FormControl({ value: null, disabled: false }),     
     });
+
   }
 
   private loadFormData(matrixreservation: Matrixreservation) {
     this.matrixreservation = matrixreservation;
-
-    this.matrixreservationForm.setValue({
-      adult: matrixreservation.adult,
-      backdrop_path: matrixreservation.backdrop_path,
-      budget: matrixreservation.budget,
-      homepage: matrixreservation.homepage,
-      // genre_ids: matrixreservation.genre_ids,
-      // id: matrixreservation.id,
-      original_language: matrixreservation.original_language,
-      original_title: matrixreservation.original_title,
-      overview: matrixreservation.overview,
-      popularity: matrixreservation.popularity,
-      poster_path: matrixreservation.poster_path,
-      release_date: matrixreservation.release_date,
-      title: matrixreservation.title,
-      video: matrixreservation.video,
-      vote_count: matrixreservation.vote_count,
-      vote_average: matrixreservation.vote_average,
+	  this.matrixreservationForm.setValue({
+      id: matrixreservation.id,
+      test: matrixreservation.test,
     });
+
   }
 
   private deleteMatrixreservation() {
@@ -140,7 +113,7 @@ export class MatrixreservationDetailComponent implements OnInit, OnDestroy {
   }
 
   private showMockedFeaturesWarning() {
-    this.snackBar.open(MOCKED_FEATURES_WARNING_MESSAGE, 'OK', { duration: 10000 });
+    this.snackBar.open(EMPTY_FIELD , 'OK', { duration: 10000 });
   }
 
 }

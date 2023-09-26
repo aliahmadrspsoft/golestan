@@ -1,2 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./app/core/styles/main";
+.red-snackbar,.mat-simple-snack-bar-content{
+color:#f4cf05;
+font-family: WBtitr !important;
+dir:rtl;
+}
+.mat-simple-snackbar-action>button>span{
+font-family: WBtitr !important;
+}
+.mat-snack-bar-container{
+direction:rtl;
+}

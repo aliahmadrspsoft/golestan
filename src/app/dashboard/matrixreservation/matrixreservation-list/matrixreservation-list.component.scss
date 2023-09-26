@@ -1,8 +1,7 @@
-table {
-    width: 100%;
-}
+
 .u-margin-l-8{
 font-family:WYekan;
+width: inherit;
 }
 h2{
 font-family:WIranNastaliq;
@@ -19,3 +18,100 @@ color:black;
 position:sticky;
 top:0px;
 }
+ng-persian-datepicker{
+  font-family: WYekan;
+  white-space: normal;
+  z-index:9999;
+}
+input.ng-pristine{
+line-height:32px;
+width:100%;
+}
+.mat-select{
+width:100%
+}
+.col-centered>button{
+font-family:WShabnam;
+float:left;
+}
+.col-centered{
+margin:2px
+}
+.pos{
+background: #46bbe9;
+  padding-top: 2px;
+}
+.mat-raised-input,.ng-star-inserted{
+font-family:WYekan;
+
+}
+mat-row:hover{
+cursor:pointer;
+background:#ececba;
+}
+@media screen and (max-width: 960px) {
+
+  .mat-table {
+  direction:rtl;
+    border: 0;
+    vertical-align: middle
+  }
+
+  .mat-table caption {
+    font-size: 1em;
+  }
+  
+
+  .mat-table .mat-header-cell {
+    
+    border: 10px solid;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  .mat-table .mat-row {
+    border-bottom: 5px solid #ddd;
+    display: block;
+  }
+  
+
+
+  .mat-table .mat-cell {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: 1em;
+    text-align: left;
+    font-weight: bold;
+    height:30px;
+    margin-bottom: 4%;
+  }
+  .mat-table .mat-cell:before {
+  
+    content: attr(aria-label);
+   
+    content: attr(data-label);
+    float: right;
+    text-transform: uppercase;
+    font-weight: normal;
+    
+    font-size: .85em;
+  }
+  .mat-table .mat-cell:last-child {
+    border-bottom: 0;
+  }
+    .mat-table .mat-cell:first-child {
+    margin-top: 4%;
+  }
+}
+.redspan{
+background:red;
+}
+.mat-cell {
+border:solid #fff 10px;
+}
+
+

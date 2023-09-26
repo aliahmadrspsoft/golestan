@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
 import { MatrixreservationRoutingModule } from './matrixreservation-routing.module';
 import { MatrixreservationService } from './matrixreservation.service';
-
+import { NgPersianDatepickerModule } from 'ng-persian-datepicker';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -11,7 +12,9 @@ import { MatrixreservationService } from './matrixreservation.service';
   ],
   imports: [
     MatrixreservationRoutingModule,
-    SharedModule
+    SharedModule, 
+	NgPersianDatepickerModule,
+    ReactiveFormsModule,
   ],
   providers: [MatrixreservationService]
 })

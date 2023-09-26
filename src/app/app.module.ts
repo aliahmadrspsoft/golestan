@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
     BrowserModule,
     AppRoutingModule, // Main routes for application
     CoreModule,       // Singleton objects (services, components and resources that are loaded only at app.module level)
+
   ],
   providers: [],
   bootstrap: [AppComponent]
